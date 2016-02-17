@@ -1,0 +1,98 @@
+.element-invisible, #socialcounter_hidden_field {
+    display: none;
+}
+
+div#edit-horizontal-images div img, div#edit-horizontal-images div input {
+    vertical-align: middle;
+}
+
+#loginRadiusSharingLimit, #loginRadiusSharingLimit_vertical {
+    color: red;
+    display: none;
+    margin-bottom: 5px;
+}
+
+#share_show_veritcal_widget, #horizontal_sharing_show, #edit-vertical-position div {
+    clear: both
+}
+
+#socialcounter_show_providers_list > div, #socialcounter_vertical_show_providers_list > div, #share_providers > div, #vertical_share_providers > div {
+    display: inline-block;
+    margin-right: 17px;
+    width: 252px
+}
+
+#counter_providers > div, #vertical_counter_providers > div {
+    display: inline-block;
+    margin-right: 17px
+}
+
+#share_horizontal_images, #share_vertical_images, #show_horizontal_block {
+    display: block;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px
+}
+
+ul#share_rearrange_providers li, ul#share_vertical_rearrange_providers li {
+    float: left;
+    margin-left: 0
+}
+
+.form-item.form-type-radio.form-item-share-horizontal-images label img {
+    vertical-align: middle;
+    margin-left: 12px
+}
+
+#lr_tabs {
+    bottom: -1px;
+    font-size: 1.54em;
+    line-height: 1.54em;
+    margin: 0 0 -8px
+}
+
+div#lr_tabs li {
+    display: inline;
+    list-style: none;
+    margin: 0 0 0 -3px;
+    padding: 0
+}
+
+div#lr_tabs li a {
+    border: 1px solid #aaa;
+    background: #ccc;
+    -moz-border-radius: 8px 8px 0 0;
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    border-radius: 8px 8px 0 0;
+    color: #000;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 0 5px 2px 0;
+    outline: 0;
+    padding: 0 14px;
+    text-decoration: none;
+    cursor: pointer
+}
+
+div#lr_tabs li a.active, div#lr_tabs li a:hover {
+    color: #fff;
+    border: 1px solid #fff !important;
+    background: #666
+}
+
+div#edit-vertical-images div {
+    float: left;
+    margin-right: 20px
+}
+
+.form-item-vertical-images label img {
+    vertical-align: middle
+}
+
+.form-item-vertical-images input {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}

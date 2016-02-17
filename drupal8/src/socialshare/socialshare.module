@@ -1,0 +1,341 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\node\Entity\Node;
+
+/**
+ * Get default values of sharing/counter networks.
+ *
+ * @param string $key sharing/counter key
+ * @return array default sharing/counter networks
+ */
+function default_sharing_networks($key) {
+  if ($key == 'share_rearrange_providers' || $key == 'share_vertical_rearrange_providers') {
+    return array("facebook", "googleplus", "google", "pinterest", "twitter");
+  }
+  return array(
+    "Facebook Like",
+    "Google+ +1",
+    "Pinterest Pin it",
+    "LinkedIn Share"
+  );
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * @return array
+ */
+function socialshare_theme() {
+  $path = drupal_get_path('module', 'socialshare') . '/theme';
+  return array(
+    'social_share' => array(
+      'variables' => array(
+        'node' => NULL,
+      ),
+      'template' => 'social_share',
+      'path' => $path,
+    ),
+  );
+}
+
+/**
+ * Get horizontal Sharing Div.
+ *
+ * @return string
+ */
+function horizontal_sharing_div() {
+  $config = \Drupal::config('socialshare.settings');
+  $socialsharing_horizontal_images = $config->get('horizontal_images');
+  if (in_array($socialsharing_horizontal_images, array('8', '9'))) {
+    return 'lrcounter_simplebox';
+  }
+  else {
+    return 'lrsharecontainer';
+  }
+}
+
+/**
+ * Get Vertical Sharing Div.
+ *
+ * @return string
+ */
+function vertical_sharing_div() {
+  $config = \Drupal::config('socialshare.settings');
+  $socialsharing_vertical_images = $config->get('vertical_images');
+
+  if ($socialsharing_vertical_images == '4' || $socialsharing_vertical_images == '5') {
+    return 'lrshareverticalcontainer';
+  }
+  else {
+    return 'lrcounter_verticalsimplebox';
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ *
+ * @param array $build
+ * @param EntityInterface $node
+ * @param EntityViewDisplayInterface $display
+ * @param $view_mode
+ */
+function socialshare_node_view(array &$build, EntityInterface $node, EntityViewDisplayInterface $display, $view_mode) {
+  $config = \Drupal::config('socialshare.settings');
+  $h_output = "";
+  $v_output = "";
+  $shareall_withexcept = $config->get('show_pages');
+  $node_withexcept = $config->get('show_exceptpages');
+  $node_except = explode(',', $node_withexcept);
+  $vertical_shareall_withexcept = $config->get('vertical_show_pages');
+  $vertical_node_withexcept = $config->get('vertical_show_exceptpages');
+  $vertical_node_except = explode(',', $vertical_node_withexcept);
+  $share_title = '';
+
+  if ($config->get('enable_horizontal') == 1) {
+    if ($shareall_withexcept == 0) {
+      if (!in_array($node->id(), $node_except) AND !in_array($node->getTitle(), $node_except)) {
+
+        $share_title = $config->get('label');
+        $h_output = horizontal_sharing_div();
+      }
+    }
+    elseif ($shareall_withexcept == 1) {
+      if (in_array($node->id(), $node_except) OR in_array($node->getTitle(), $node_except)) {
+
+        $share_title = $config->get('label');
+        $h_output = horizontal_sharing_div();
+      }
+    }
+
+    if ($config->get('position_top') == 1) {
+      $build['socialshare_top'] = array(
+        '#theme' => 'social_share',
+        '#weight' => -10,
+        '#node' => array(
+          'class' => $h_output,
+          'type' => 'horizontal',
+          'title' => $share_title
+        ),
+      );
+    }
+
+    if ($config->get('position_bottom') == 1) {
+      $build['socialshare_bottom'] = array(
+        '#theme' => 'social_share',
+        '#weight' => 10,
+        '#node' => array(
+          'class' => $h_output,
+          'type' => 'horizontal',
+          'title' => $share_title
+        ),
+      );
+    }
+  }
+
+  if ($config->get('enable_vertical') == 1) {
+
+    if ($vertical_shareall_withexcept == 0) {
+      if (!in_array($node->id(), $vertical_node_except) AND !in_array($node->getTitle(), $vertical_node_except)) {
+        $v_output = vertical_sharing_div();
+      }
+    }
+    elseif ($vertical_shareall_withexcept == 1) {
+      if (in_array($node->id(), $vertical_node_except) OR in_array($node->getTitle(), $vertical_node_except)) {
+        $v_output = vertical_sharing_div();
+      }
+    }
+
+    $build['socialshare_vertical'] = array(
+      '#theme' => 'social_share',
+      '#weight' => 10,
+      '#node' => array('class' => $v_output, 'type' => 'vertical'),
+    );
+  }
+
+}
+
+/**
+ *  Horizontal Social Sharing Script code.
+ */
+function horizontal_script_code() {
+  $config = \Drupal::config('socialshare.settings');
+  $sociallogin_config = \Drupal::config('sociallogin.settings');
+  $share_rearrange = $config->get("share_rearrange");
+  $horizontal_image = $config->get('horizontal_images');
+
+  if (empty($share_rearrange)) {
+    $config->set('share_rearrange', default_sharing_networks('share_providers'));
+  }
+  if (in_array($horizontal_image, array('8', '9'))) {
+
+    $counter_providers = $config->get('counter_providers');
+
+    if (empty($counter_providers)) {
+      $config->set('counter_providers', default_sharing_networks('counter_providers'));
+    }
+
+    $type = 'horizontal';
+
+    if ($config->get('horizontal_images') == '8') {
+      $type = 'vertical';
+    }
+
+    $mysettings = array(
+      'counter' => TRUE,
+      'lr_interface' => 'simple',
+      'providers' => implode(",", $config->get('counter_providers')),
+      'countertype' => $type,
+      'divwidget' => 'lrcounter_simplebox',
+    );
+
+  }
+  else {
+    $interface = 'horizontal';
+
+    if ($horizontal_image == '2' || $horizontal_image == '3') {
+      $interface = 'simpleimage';
+    }
+    elseif ($horizontal_image == '10') {
+      $interface = 'responsive';
+    }
+    $size = '32';
+
+    if (in_array($horizontal_image, array('1', '3', '8', '9'))) {
+      $size = '16';
+    }
+
+    $mysettings = array(
+      'sharing' => TRUE,
+      'lr_interface' => $interface,
+      'providers' => implode(",", $config->get('share_rearrange')),
+      'size' => $size,
+      'apikey' => trim($sociallogin_config->get('api_key')),
+      'divwidget' => 'lrsharecontainer',
+    );
+  }
+  return $mysettings;
+
+}
+
+/**
+ * Vertical Social Sharing Script code.
+ */
+function vertical_script_code() {
+  $config = \Drupal::config('socialshare.settings');
+  $sociallogin_config = \Drupal::config('sociallogin.settings');
+
+  if ($config->get('vertical_images') == '4' || $config->get('vertical_images') == '5') {
+    $vertical_share_rearrange = $config->get("vertical_share_rearrange");
+
+    if (empty($vertical_share_rearrange)) {
+      $config->set('vertical_share_rearrange', default_sharing_networks('vertical_share_providers'));
+    }
+
+    $size = '16';
+
+    if ($config->get('vertical_images') == '4') {
+      $size = '32';
+    }
+    $position1 = 'bottom';
+    $position2 = 'right';
+    if ($config->get('vertical_position') == '0') {
+      $position1 = 'top';
+      $position2 = 'left';
+    }
+    elseif ($config->get('vertical_position') == '1') {
+      $position1 = 'top';
+      $position2 = 'right';
+    }
+    elseif ($config->get('vertical_position') == '2') {
+      $position1 = 'bottom';
+      $position2 = 'left';
+    }
+
+    $mysettings = array(
+      'verticalsharing' => TRUE,
+      'lr_vertical_interface' => 'Simplefloat',
+      'vertical_providers' => implode(",", $config->get('vertical_share_rearrange')),
+      'vertical_size' => $size,
+      'vertical_apikey' => trim($sociallogin_config->get('api_key')),
+      'vertical_position1' => $position1,
+      'vertical_position2' => $position2,
+      'vertical_offset' => '0px',
+      'vertical_divwidget' => 'lrshareverticalcontainer',
+    );
+  }
+  else {
+    $counter_providers = $config->get('vertical_counter_providers');
+
+    if (empty($counter_providers)) {
+      $config->set('vertical_counter_providers', default_sharing_networks('vertical_counter_providers'));
+    }
+
+    $type = 'horizontal';
+
+    if ($config->get('vertical_images') == '6') {
+      $type = 'vertical';
+
+    }
+    $position1 = 'bottom';
+    $position2 = 'right';
+    if ($config->get('vertical_position') == '0') {
+      $position1 = 'top';
+      $position2 = 'left';
+    }
+    elseif ($config->get('vertical_position') == '1') {
+      $position1 = 'top';
+      $position2 = 'right';
+    }
+    elseif ($config->get('vertical_position') == '2') {
+      $position1 = 'bottom';
+      $position2 = 'left';
+    }
+
+    $mysettings = array(
+      'verticalcounter' => TRUE,
+      'vertical_providers' => implode(",", $config->get('vertical_counter_providers')),
+      'vertical_countertype' => $type,
+      'vertical_position1' => $position1,
+      'vertical_position2' => $position2,
+      'vertical_offset' => '0px',
+      'vertical_divwidget' => 'lrcounter_verticalsimplebox',
+    );
+  }
+  return $mysettings;
+
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function socialshare_page_attachments(&$page) {
+  $config = \Drupal::config('socialshare.settings');
+  $script = array();
+  if ($config->get('enable_horizontal') == 1) {
+    $script = array_merge($script, horizontal_script_code());
+  }
+
+  if ($config->get('enable_vertical') == 1) {
+    $script = array_merge($script, vertical_script_code());
+  }
+
+  if ($script) {
+    $page['#attached']['drupalSettings'] = array('advancelrsocialshare' => $script);
+    $page['#attached']['library'][] = 'socialshare/drupal.socialshare_front';
+  }
+}
+
+/**
+ * Remove Links if Social Login module enabled.
+ *
+ * @param $links
+ */
+function socialshare_menu_links_discovered_alter(&$links) {
+  if (\Drupal::moduleHandler()->moduleExists('sociallogin')) {
+    unset($links['socialshare.settings_form']);
+    $links['sociallogin.settings_form']['title'] = t('Social Login and Share');
+    $links['sociallogin.settings_form']['description'] = t('Configure your social login and share settings');
+  }
+}

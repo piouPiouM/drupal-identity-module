@@ -1,0 +1,7 @@
+{% if node.type == 'horizontal' %}
+    <div> {{ node.title }}</div>
+    <div class="{{ node.class }}"></div>
+{% endif %}
+{% if node.type == 'vertical' %}
+    <div class="{{ node.class }}"></div>
+{% endif %}

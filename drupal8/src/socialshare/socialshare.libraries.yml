@@ -1,0 +1,17 @@
+drupal.socialshare_back:
+  version: VERSION
+  js:
+    js/admin_share.js: {}
+  css:
+    component:
+      css/admin_share.css: {}
+
+  dependencies:
+    - core/jquery.ui.sortable
+
+drupal.socialshare_front:
+  version: VERSION
+  js:
+    js/socialshare_widget.js: {}
+  dependencies:
+    - core/drupalSettings
