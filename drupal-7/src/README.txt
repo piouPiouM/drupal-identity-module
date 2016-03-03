@@ -1,6 +1,6 @@
 User Registration and Management
 
--- SUMMARY --
+-- SUMMARY -- 
 
 Fully managed registration service including Email Registration, Social Login, password management, and data collection.
 
@@ -51,8 +51,9 @@ list in your site's admin account.
 3. On configuration page, you will see config option for User Registration and Management module .
 
 
+ -- Changelog -- 
 
- -- Changelog -- 1.2 --
+ -- 1.2 -- 
  1. Added LoginRadius Api key and Secret Key Validation.
 
  -- 1.1 --
