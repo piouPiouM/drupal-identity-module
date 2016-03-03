@@ -1,4 +1,5 @@
 <?php
+module_load_include('inc', 'lr_social_login', 'includes/lr_social_login.loginradius');
 /**
  * @file
  * Admin page callback file for the lr_social_sharing module.
@@ -12,6 +13,10 @@
  * @return array A renderable form array for the respective request.
  */
 function lr_social_sharingbar_settings_form($form, &$form_state) {
+  if (!variable_get('lr_social_login_apikey', FALSE) || !variable_get('lr_social_login_apisecret', FALSE)) {
+    drupal_set_message(t('To activate the social login, insert LoginRadius API Key and Secret in the social login section below.'), 'warning');
+  }
+  
   global $base_url;
   drupal_add_library('system', 'ui.sortable');
   drupal_add_js(drupal_get_path('module', 'lr_social_sharing') . '/js/lr_social_sharing.js',
@@ -63,7 +68,7 @@ display_horizontal_widget();
   $form[$share_group]['lr_social_sharing_enable_horizontal_share'] = array(
     '#type' => 'radios',
     '#title' => t('Do you want to enable horizontal social sharing for your website?'),
-    '#default_value' => variable_get('lr_social_sharing_enable_horizontal_share', 1),
+    '#default_value' => variable_get('lr_social_sharing_enable_horizontal_share', 0),
     '#options' => array(
       1 => t('Yes'),
       0 => t('No'),
@@ -320,6 +325,15 @@ display_horizontal_widget();
  * @return bool
  */
 function lr_social_sharingbar_settings_submit($form, &$form_state) {
+  $api_key = isset($form_state['values']['lr_social_login_apikey']) ? trim($form_state['values']['lr_social_login_apikey']) : trim(variable_get('lr_social_login_apikey', ''));
+  $api_secret = isset($form_state['values']['lr_social_login_apisecret']) ? trim($form_state['values']['lr_social_login_apisecret']) : trim(variable_get('lr_social_login_apisecret', ''));
+   
+  $data = lr_social_share_get_authentication($api_key, $api_secret);
+
+  if (isset($data['status']) && $data['status'] != 'status') {
+    drupal_set_message($data['message'], $data['status']);
+    return FALSE;
+  }
   form_state_values_clean($form_state);
 
   foreach ($form_state['values'] as $key => $value) {
@@ -340,6 +354,49 @@ function lr_social_sharingbar_settings_submit($form, &$form_state) {
   cache_clear_all();
   menu_rebuild();
   return TRUE;
+}
+
+
+/**
+ * Check API credentials and API connection methos is working or not
+ *
+ * @param string $apikey LoginRadius API Key
+ * @param string $apisecret LoginRadius API Secret
+ * @param string $api_handler API connection method curl/drupal_http_request
+ * @return array Contain message and status of data
+ */
+function lr_social_share_get_authentication($apikey, $apisecret) {
+  if (isset($apikey)) {
+    $data = array();
+    $obj_auth = new LoginRadius();
+
+    try {
+      $validate_url = 'https://' . LR_DOMAIN . '/api/v2/app/validate?apikey=' . rawurlencode(trim($apikey)) . '&apisecret=' . rawurlencode(trim($apisecret));
+      $result = json_decode($obj_auth->loginradiusGetApiResponse($validate_url, FALSE));
+
+      if (empty($result)) {
+        $data['message'] = check_plain('please check your php.ini settings to enable CURL or FSOCKOPEN');
+        $data['status'] = 'error';
+      }
+      elseif (isset($result->Status) && !$result->Status) {
+        $error = array(
+          "API_KEY_NOT_VALID" => "LoginRadius API key is invalid. Get your LoginRadius API key from <a href='http://www.loginradius.com' target='_blank'>LoginRadius</a>",
+          "API_SECRET_NOT_VALID" => "LoginRadius API Secret is invalid. Get your LoginRadius API Secret from <a href='http://www.loginradius.com' target='_blank'>LoginRadius</a>",
+          "API_KEY_NOT_FORMATED" => "LoginRadius API Key is not formatted correctly",
+          "API_SECRET_NOT_FORMATED" => "LoginRadius API Secret is not formatted correctly"
+        );
+
+        foreach ($result->Messages as $value) {
+          $data['message'] = $error["$value"];
+          $data['status'] = 'error';
+        }
+      }
+
+      return $data;
+    } catch (Exception $e) {
+      watchdog_exception('type', $e);
+    }
+  }
 }
 
 /**

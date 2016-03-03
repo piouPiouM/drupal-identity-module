@@ -13,6 +13,7 @@ function lr_social_sharing_uninstall() {
     'lr_social_sharing_horizontal',
     'lr_social_sharing_selected_share_interface',
     'lr_social_sharing_horizontal_share',
+    'lr_social_sharing_enable_horizontal_share',
     'lr_social_sharing_enable_vertical_share',
     'socialshare_label_string',
     'lr_social_sharing_horizontal_images',

@@ -8,7 +8,7 @@ jQuery(document).ready(function () {
 });
 
  function showAndHideUI() { 
-      var options = jQuery('input[name=lr_raas_email_verification_condition]:checked').val();        
+      var options = jQuery('input[name=lr_raas_email_verification_condition]:checked').val();   
           if (options == 2) {                
                   jQuery('.form-item-lr-raas-enable-login-on-email-verification').hide();                
                   jQuery('.form-item-lr-raas-prompt-password-on-social-login').hide();    

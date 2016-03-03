@@ -791,6 +791,15 @@ if (variable_get('lr_raas_custom_options') != '') {
         $script .= 'raasoption.emailVerificationTemplate = "'. lr_raas_remove_tags_options(variable_get('lr_raas_email_verification_template')).'";';
   } 
   
+  
+   drupal_add_js(
+      drupal_get_path('module', 'lr_raas') . '/js/LoginRadiusFrontEnd.js',
+      array(
+        'type' => 'file',
+        'scope' => 'header',
+        'weight' => 10,
+      )
+    );  
  
   if (!empty($raas_api_key)) {
     // Set the token in session and close the child window.
@@ -812,15 +821,7 @@ if (variable_get('lr_raas_custom_options') != '') {
         'scope' => 'header',
         'weight' => 2,
       ));
-
-    drupal_add_js(
-      drupal_get_path('module', 'lr_raas') . '/js/LoginRadiusFrontEnd.js',
-      array(
-        'type' => 'file',
-        'scope' => 'header',
-        'weight' => 10,
-      )
-    );   
+    
     drupal_add_js('
     //initialize raas options
     var raasoption = {};
@@ -958,6 +959,7 @@ function lr_raas_add_existing_user_save($userprofile, $account) {
   }
 }
 
+
 /**
  * Map User Registration Custom Fields in account.
  *
@@ -1030,8 +1032,7 @@ function lr_raas_field_mapping_create_user(&$form_state, $userprofile, $account)
  * @param $account
  * @param $userprofile
  */
-function lr_raas_add_user_data_after_save($account, $userprofile) {
-
+function lr_raas_add_user_data_after_save($account, $userprofile) {  
   if (variable_get('lr_raas_enabled_user_registration') == 1) {
     variable_del('lr_social_login_enable_user_registration');
     variable_del('lr_raas_enabled_user_registration');
@@ -1110,7 +1111,6 @@ function lr_raas_check_send_verification_email($account, $userprofile) {
   unset($_SESSION['lrdata']);
   $_SESSION['current_social_provider'] = $userprofile->ID;
   return lr_social_login_user_redirect($form, $account, $userprofile, 'lr_social_login_userlogin_redirect');
-
 }
 
 /**
@@ -1124,7 +1124,6 @@ function lr_raas_form_comment_form_alter(&$form, &$form_state) {
     if (user_is_logged_in()) {
       return;
     }
-
     $form['lr_social_login_links']['#markup'] = theme('raas_social_widget_container');
   }
 }
@@ -1181,8 +1180,7 @@ function lr_raas_lr_add_mapping_mailchimp_field($temp_merge_vars, $userprofile) 
  * @param $form_id
  * @return mixed
  */
-function lr_raas_form_lr_social_login_lr_advance_settings_alter(&$form, &$form_state, $form_id) {
-  
+function lr_raas_form_lr_social_login_lr_advance_settings_alter(&$form, &$form_state, $form_id) {  
   $instances = field_info_instances('user', 'user');
   $raas_sdk = new LoginradiusRaasSDK();
   $fields = $raas_sdk->raasGetCustomFields();

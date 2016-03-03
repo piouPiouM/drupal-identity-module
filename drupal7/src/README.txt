@@ -47,28 +47,30 @@ Please share your comments and feedback at feedback@loginradius.com
 
 1. After successfully installing, you will see User Registration and Management module in module 
 list in your site's admin account.
-2. Click on Configuration tab, Then go to people block and click on User Registration and Management 
+2. Click on Configration tab, Then go to people block and click on User Registration and Management 
 3. On configuration page, you will see config option for User Registration and Management module .
 
 
 
- -- Changelog --
- - 1.1 - 
- 1. Implemented following LoginRadius option
-	1. inFormvalidationMessage
-	2. termsAndConditionHtml
-	3. formRenderDelay
-	4. passwordlength
-	5. V2RecaptchaSiteKey
-	6. enableLoginOnEmailVerification
-	7. promptPasswordOnSocialLogin
-	8. enableUserName
-	9. forgotPasswordTemplate
-	10. emailVerificationTemplate
-	11. askEmailAlwaysForUnverified
-2. Enabled support of Optional email verification and disabled email verification 
+ -- Changelog -- 1.2 --
+ 1. Added LoginRadius Api key and Secret Key Validation.
 
- - 1.0 -
+ -- 1.1 --
+ 1.  Added email verification options during registration i.e Required, Optional, Disable.
+ 2.  Added login with username.
+ 3.  Ask Email For Unverified Account
+ 4.  Enable login upon email verification.
+ 5.  Prompt for password after registration with social provider.
+ 6.  Google reCaptcha public key.
+ 7.  Template name for email verification email
+ 8.  Template name for forgot password email
+ 9.  Password Length (min, max)
+ 10. Delay time to generate authentication pages
+ 11. Text for Terms and Condition
+ 12. Display Validation Message
+ 13. Custom customer registration options
+  
+ -- 1.0 --
  1. This is the first version of the application.
 
  -- FAQ --

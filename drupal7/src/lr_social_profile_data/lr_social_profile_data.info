@@ -7,7 +7,7 @@ configure = admin/config/people/userregistration/socialprofiledata
 
 
 ; Information added by Drupal.org packaging script on 2015-09-25
-version = "7.x-1.1"
+version = "7.x-1.2"
 core = "7.x"
 project = "user_registration_and_management"
 datestamp = "1443164989"

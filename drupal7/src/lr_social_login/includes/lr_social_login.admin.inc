@@ -485,6 +485,7 @@ function lr_social_login_lr_advance_settings($form, &$form_state) {
       0 => t('No'),
     )
   );
+    
   return system_settings_form($form);
 }
 
@@ -498,7 +499,7 @@ function lr_social_login_save_settings(&$form_state) {
   $api_key = isset($form_state['values']['lr_social_login_apikey']) ? trim($form_state['values']['lr_social_login_apikey']) : trim(variable_get('lr_social_login_apikey', ''));
   $api_secret = isset($form_state['values']['lr_social_login_apisecret']) ? trim($form_state['values']['lr_social_login_apisecret']) : trim(variable_get('lr_social_login_apisecret', ''));
   $data = lr_social_login_get_authentication($api_key, $api_secret);
-
+  
   if (isset($data['status']) && $data['status'] != 'status') {
     drupal_set_message($data['message'], $data['status']);
     return FALSE;
@@ -572,7 +573,7 @@ function lr_social_login_isvalid_key($key) {
  * @param string $api_handler API connection method curl/drupal_http_request
  * @return array Contain message and status of data
  */
-function lr_social_login_get_authentication($apikey, $apisecret) {
+function lr_social_login_get_authentication($apikey, $apisecret) {  
   if (isset($apikey)) {
     $data = array();
     $obj_auth = new LoginRadius();
