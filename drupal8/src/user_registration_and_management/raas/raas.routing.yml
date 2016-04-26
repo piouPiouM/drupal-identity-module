@@ -1,0 +1,9 @@
+raas.change_password:
+  path: 'user/{user}/changepassword'
+  defaults:
+     _controller: '\Drupal\raas\Controller\RaasController::userChangePassword'
+     _title: 'Password'
+  requirements:
+    _custom_access: '\Drupal\raas\Controller\RaasController::changePasswordAccess'
+  options:
+    no_cache: TRUE

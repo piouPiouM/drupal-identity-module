@@ -1,0 +1,7 @@
+services:
+  raas.user_manager:
+    class: Drupal\raas\RaasUserManager
+  raas.route_subscriber:
+    class: Drupal\raas\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

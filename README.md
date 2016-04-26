@@ -17,7 +17,7 @@ Please visit [here](http://www.loginradius.com/) for more information.
 ## Documentation
 * [User Registration](http://apidocs.loginradius.com/docs/user-registration) - Everything you need to implement the full LoginRadius User Registration system including Social Login.
 * [Drupal-7 Installation](http://support.loginradius.com/hc/en-us/articles/204476989-Drupal-Plugin-v7-x-Advanced-Modules) - Everything you need to implement with drupal7.
-* [Drupal-8 Installation](http://support.loginradius.com/hc/en-us/articles/207616986-Drupal-v8-x-Social-Login-and-Social-Sharing-Instructions) - Everything you need to implement with drupal8.
+* [Drupal-8 Installation](http://support.loginradius.com/hc/en-us/articles/210111283-Drupal-v8-x-Customer-Identity-Module-Instrauction) - Everything you need to implement with drupal8.
 
 
 General documentation regarding the LoginRadius REST API and related flows can be found on the [LoginRadius API Documentations](http://apidocs.loginradius.com/) site. 

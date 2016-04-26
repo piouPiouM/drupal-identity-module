@@ -1,0 +1,9 @@
+<?php
+/**
+ * Implements hook_schema().
+ */
+function socialprofiledata_install() {
+  module_set_weight('socialprofiledata', 3);
+}
+
+

@@ -1,7 +1,0 @@
-sociallogin.settings_form:
-  title: Social Login and Share
-  description: 'Configure your social login and share settings'
-  parent: user.admin_index
-  route_name: sociallogin.settings_form
-
-
