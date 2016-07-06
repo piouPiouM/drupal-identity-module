@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Provides uninstall function for the lr_social_login_and_share module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function lr_hosted_page_uninstall() {
+  variable_del('lr_hosted_page_enable');
+}
+
+/**
+ * Implements hook_schema().
+ */
+function lr_hosted_page_schema() {
+  db_update('system')
+    ->fields(array('weight' => 5))
+    ->condition('name', 'lr_hosted_page', '=')
+    ->execute();
+}

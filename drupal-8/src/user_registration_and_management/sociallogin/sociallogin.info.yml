@@ -1,0 +1,10 @@
+name: Social Login
+type: module
+description: 'Allows users to authenticate with their Social accounts.'
+package: LoginRadius Unified Social API
+# core: 8.x
+
+# Information added by Drupal.org packaging script on 2015-11-24
+version: '8.x-2.1'
+core: '8.x'
+project: 'loginradius'

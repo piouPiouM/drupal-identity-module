@@ -1,0 +1,142 @@
+<?php
+
+/**
+ * @file
+ * Provides uninstall function for the lr_social_login module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function lr_social_login_uninstall() {
+  $deleted_keys = array(
+    'lr_social_login',
+    'lr_sso_site_name',
+    'lr_social_login_apikey',
+    'lr_social_login_apisecret',
+    'lr_social_login_api_handler',
+    'lr_social_login_check_api',
+    'lr_social_login_interface_size',
+    'lr_social_login_interface_columns',
+    'lr_social_login_interface_bgcolor',
+    'lr_social_login_label_string',
+    'lr_social_login_attach_login_form',
+    'lr_social_login_loginpage_position',
+    'lr_social_login_registerpage_position',
+    'lr_social_login_showicon_location',
+    'lr_social_login_disable_traditional_login',
+    'lr_social_login_identity_label_string',
+    'lr_social_login_identity_tab_text',
+    'lr_social_login_display_username',
+    'lr_social_login_skip_email_verification',
+    'lr_social_login_force_registration',
+    'lr_social_login_link_account',
+    'lr_social_login_email_required',
+    'lr_social_login_emailrequired_popup_top',
+    'lr_social_login_emailrequired_popup_text',
+    'lr_social_login_emailrequired_popup_wrong',
+    'lr_social_login_userlogin_redirect',
+    'lr_social_login_custom_redirection',
+    'lr_social_login_user_fields',
+    'lr_social_login_profile_fields',
+    'lr_raas_inform_validation_messages',
+    'lr_raas_terms_and_condition_html',
+    'lr_raas_form_render_delay',
+    'lr_raas_min_password_length',
+    'lr_raas_max_password_length',
+    'lr_raas_v2_recaptcha_site_key',
+    'lr_raas_forgot_password_template',
+    'lr_raas_email_verification_template',
+    'lr_raas_custom_options',
+    'lr_raas_email_verification_condition',
+    'lr_raas_enable_login_on_email_verification',
+    'lr_raas_prompt_password_on_social_login',
+    'lr_raas_enable_user_name',
+    'lr_raas_ask_email_always_for_unverified'
+  );
+  foreach($deleted_keys as $key){
+    variable_del($key);
+  }
+}
+
+/**
+ * Implements hook_schema().
+ */
+function lr_social_login_schema() {
+  if(!db_table_exists('loginradius_mapusers')){
+  $schema['loginradius_mapusers'] = array(
+    'description' => 'Stores Engage linked account information.',
+    'fields' => array(
+      'aid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Authmap ID of the authmap table.',
+      ),
+      'provider' => array(
+        'type' => 'varchar',
+        'length' => 30,
+        'not null' => TRUE,
+        'description' => 'The provider\'s machine name.',
+      ),
+      'provider_id' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The provider\'s unique id.',
+      ),
+    ),
+    'primary key' => array('aid'),
+  );
+  return $schema;
+  }   
+  if(!db_table_exists('loginradius_log')){
+  $schema['loginradius_log'] = array(
+    'description' => 'Stores API Error/Success data information.',
+    'fields' => array(
+      'log_id' => array(
+        'type' => 'serial',      
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Log id of log table.',
+      ),
+      'api_url' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The API Url.',
+      ),
+      'request_type' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The API Request.',
+      ),
+      'data' => array(
+        'type' => 'text',       
+        'not null' => TRUE,
+        'description' => 'The API Data.',
+      ),
+      'response' => array(
+        'type' => 'text',      
+        'not null' => TRUE,
+        'description' => 'The API Response.',
+      ),
+      'response_type' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The API Response type',
+      ),     
+      'timestamp' => array(
+        'type' => 'int',
+        'length' => 12,
+        'not null' => TRUE,
+        'description' => 'The created date time.',
+      ),
+    ),
+    'primary key' => array('log_id'),
+  );
+  return $schema;
+  } 
+}
