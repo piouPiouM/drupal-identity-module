@@ -27,4 +27,27 @@ function lr_social_profile_data_schema() {
     ->fields(array('weight' => 3))
     ->condition('name', 'lr_social_profile_data', '=')
     ->execute();
+  
+    if (db_table_exists('loginradius_extended_profile_data')) { 
+        $field_exist = db_field_exists('loginradius_extended_profile_data', 'no_of_logins');
+        if(!$field_exist) {           
+        $spec = array(
+        'type' => 'varchar',
+        'description' => "no of logins",
+        'length' => 10,
+        'not null' => FALSE,
+      ); 
+      db_add_field( 'loginradius_extended_profile_data', 'no_of_logins', $spec);
+      }
+    }
+    
+    if(db_table_exists('loginradius_facebook_events')) {
+        $spec = array(
+        'type' => 'text',
+        'description' => "location of user",    
+        'not null' => FALSE,
+      ); 
+    db_change_field('loginradius_facebook_events', 'location', 'location', $spec);
+
+    }
 }

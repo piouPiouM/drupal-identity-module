@@ -90,6 +90,7 @@ function lr_social_login_schema() {
   );
   return $schema;
   }   
+  
   if(!db_table_exists('loginradius_log')){
   $schema['loginradius_log'] = array(
     'description' => 'Stores API Error/Success data information.',

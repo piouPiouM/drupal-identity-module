@@ -10,8 +10,7 @@ function userregistration_schema() {
       'not null' => FALSE,
       'default' => '',
     ));
-  }
- 
+  } 
 }
 function userregistration_install(){
 	 module_set_weight('userregistration', 4);

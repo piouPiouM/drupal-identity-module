@@ -93,6 +93,7 @@ function lr_social_profile_data_menu() {
   return $items;
 }
 
+
 /**
  * Delete loginradius database tables.
  *
