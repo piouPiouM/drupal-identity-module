@@ -1,103 +1,104 @@
 jQuery(document).ready(function () {
     //handleResponse(true, "");
     jQuery("#fade, #lr-loading").click(function () {
-        jQuery('#fade, #lr-loading').hide();       
-    });   
-    
-    var showChar = 200;
-    var ellipsestext = "...";
-    var moretext = "more";
-    var lesstext = "less";
-    jQuery('.more').each(function() {
-        var content = jQuery(this).html();
- 
-        if(content.length > showChar) {
- 
-            var c = content.substr(0, showChar);
-            var h = content.substr(showChar-1, content.length - showChar);
- 
-            var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
- 
-            jQuery(this).html(html);
-        }
- 
-    });
- 
-    jQuery(".morelink").click(function(){
-        if(jQuery(this).hasClass("less")) {
-            jQuery(this).removeClass("less");
-            jQuery(this).html(moretext);
-        } else {
-            jQuery(this).addClass("less");
-            jQuery(this).html(lesstext);
-        }
-        jQuery(this).parent().prev().toggle();
-        jQuery(this).prev().toggle();
-        return false;
-    });
-    
-     showAndHideUI();
-     showMailchimpUI();
-     
-  
+        jQuery('#fade, #lr-loading').hide();
+         });
+    showAndHideUI();   
 });
- 
+   
+LoginRadiusRaaS.$hooks.setFormCustomLabel(
+        raasHookLabel
+);
+LoginRadiusRaaS.$hooks.setFormPlaceholder(
+        raasHookPlaceholder
+);
+LoginRadiusRaaS.$hooks.setAttributes(
+        raasHookAttribute       
+);
+LoginRadiusRaaS.$hooks.setValidationRules(
+        raasHookValidation
+);
 
- function showAndHideUI() { 
-      var options = jQuery('input[name=lr_raas_email_verification_condition]:checked').val();   
-          if (options == 2) {                
-                  jQuery('.form-item-lr-raas-enable-login-on-email-verification,.form-item-lr-raas-prompt-password-on-social-login,.form-item-lr-raas-enable-user-name,.form-item-lr-raas-ask-email-always-for-unverified').hide();   
-              } else if(options == 1) {                  
-                   jQuery('.form-item-lr-raas-enable-login-on-email-verification,.form-item-lr-raas-ask-email-always-for-unverified').show(); 
-                   jQuery('.form-item-lr-raas-prompt-password-on-social-login,.form-item-lr-raas-enable-user-name').hide();
-              } else {                  
-                   jQuery('.form-item-lr-raas-enable-login-on-email-verification,.form-item-lr-raas-prompt-password-on-social-login,.form-item-lr-raas-ask-email-always-for-unverified,.form-item-lr-raas-enable-user-name').show();
-              }       
+if(!isEmpty(raasHookValidationMsg)){
+LoginRadiusRaaS.$hooks.mapValidationMessages(        
+        raasHookValidationMsg
+);
 }
- function showMailchimpUI() { 
-      var options = jQuery('input[name=lr_mailchimp_enable]:checked').val();   
-          if (options == 0) {                
-                  jQuery('.form-item-lr-mailchimp-apikey').hide();          
-                  jQuery('#edit-mailchimp-save').hide();          
-                  jQuery('#mailchimp-display-div').hide();          
-                  jQuery('#mailchimp-fields-div').hide();          
-                  jQuery('#mapping-field-title').hide();      
-                  jQuery('.mapping-field-description').hide();          
-                  
-              }  else {                  
-                   jQuery('.form-item-lr-mailchimp-apikey').show();   
-                   jQuery('#edit-mailchimp-save').show();  
-                   jQuery('#mailchimp-display-div').show();   
-                   jQuery('#mailchimp-fields-div').show();   
-                   jQuery('#mapping-field-title').show();          
-                   jQuery('.mapping-field-description').show();                          
-              }       
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+function isEmpty(obj) {
+
+    // null and undefined are "empty"
+    if (obj == null) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // If it isn't an object at this point
+    // it is empty, but it can't be anything *but* empty
+    // Is it empty?  Depends on your application.
+    if (typeof obj !== "object") return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+    return true;
+}
+function loginRadiusShowAttributePopup(editId) {       
+    loginRadiusCloseEditPopup();
+    jQuery('#showAttributePopup_'+ editId).show();
+}
+function loginRadiusShowValidationPopup(editId) {       
+    loginRadiusCloseEditPopup();
+    jQuery('#showValidationPopup_'+ editId).show();
+}
+function loginRadiusShowValidationMsgPopup() {       
+    loginRadiusCloseEditPopup();
+    jQuery('#showValidationMsgPopup').show();
+}
+function loginRadiusCloseEditPopup() {
+    jQuery('.editCustomizeHooksPopup').hide();
 }
 
- function lrCheckValidJson() {    
-      jQuery('#add_custom_options').change(function(){
-      var profile = jQuery('#add_custom_options').val();      
-      var response = '';
-      try
-      {
-          response = jQuery.parseJSON(profile);
-          if(response != true && response != false){
-              var validjson = JSON.stringify(response, null, '\t').replace(/</g, '&lt;');
-              if(validjson != 'null'){
-                  jQuery('#add_custom_options').val(validjson);
-                  jQuery('#add_custom_options').css("border","1px solid green");
-              }else{                  
-                  jQuery('#add_custom_options').css("border","1px solid red");
-              }
-          }
-          else{
-              jQuery('#add_custom_options').css("border","1px solid green");
-          }
-      } catch (e)
-      {
-          jQuery('#add_custom_options').css("border","1px solid green");
-      }
-  });
+function showAndHideUI() {
+    var options = jQuery('input[name=lr_raas_email_verification_condition]:checked').val();
+    if (options == 2) {
+        jQuery('.form-item-lr-raas-enable-login-on-email-verification,.form-item-lr-raas-prompt-password-on-social-login,.form-item-lr-raas-enable-user-name,.form-item-lr-raas-ask-email-always-for-unverified').hide();
+    } else if (options == 1) {
+        jQuery('.form-item-lr-raas-enable-login-on-email-verification,.form-item-lr-raas-ask-email-always-for-unverified').show();
+        jQuery('.form-item-lr-raas-prompt-password-on-social-login,.form-item-lr-raas-enable-user-name').hide();
+    } else {
+        jQuery('.form-item-lr-raas-enable-login-on-email-verification,.form-item-lr-raas-prompt-password-on-social-login,.form-item-lr-raas-ask-email-always-for-unverified,.form-item-lr-raas-enable-user-name').show();
+    }
+}
+
+function lrCheckValidJson() {
+    jQuery('#add_custom_options').change(function () {
+        var profile = jQuery('#add_custom_options').val();
+        var response = '';
+        try
+        {
+            response = jQuery.parseJSON(profile);
+            if (response != true && response != false) {
+                var validjson = JSON.stringify(response, null, '\t').replace(/</g, '&lt;');
+                if (validjson != 'null') {
+                    jQuery('#add_custom_options').val(validjson);
+                    jQuery('#add_custom_options').css("border", "1px solid green");
+                } else {
+                    jQuery('#add_custom_options').css("border", "1px solid red");
+                }
+            } else {
+                jQuery('#add_custom_options').css("border", "1px solid green");
+            }
+        } catch (e)
+        {
+            jQuery('#add_custom_options').css("border", "1px solid green");
+        }
+    });
 }
 
 function show_birthdate_date_block() {
@@ -149,8 +150,7 @@ function unLinkAccount(name, id) {
         }
         document.body.appendChild(form);
         form.submit();
-    }
-    else {
+    } else {
         jQuery('#fade').hide();
     }
 }
@@ -164,7 +164,7 @@ function handleResponse(isSuccess, message, show, status) {
     if (typeof show != 'undefined' && !show) {
         jQuery('#fade').show();
     }
-    if (message != null && message != "") {      
+    if (message != null && message != "") {
         jQuery('#lr-loading').hide();
         jQuery('.messageinfo').text(message);
         jQuery(".messages").show();
@@ -176,12 +176,13 @@ function handleResponse(isSuccess, message, show, status) {
                 this.reset();
             });
         }
-    }  else {
+    } else {
         jQuery(".messages").hide();
         jQuery('.messageinfo').hide();
         jQuery('.messageinfo').text("");
     }
 }
+
 function linking() {
     jQuery(".lr-linked-data, .lr-unlinked-data").html('');
     jQuery(".lr-linked").each(function () {
@@ -201,6 +202,7 @@ function linking() {
     }
     jQuery('#interfacecontainerdiv').hide();
 }
+
 LoginRadiusRaaS.$hooks.setProcessHook(function () {
     // console.log("start process", '');
     jQuery('#lr-loading').show();
@@ -208,22 +210,52 @@ LoginRadiusRaaS.$hooks.setProcessHook(function () {
     if (jQuery('.lr_account_linking') && jQuery('#interfacecontainerdiv').text() != '') {
         linking();
     }
-    if(raasoption.formRenderDelay){
-        setTimeout(function(){ jQuery('#lr-loading').hide(); }, raasoption.formRenderDelay-1);
+    if (raasoption.formRenderDelay) {
+        setTimeout(function () {
+            jQuery('#lr-loading').hide();
+        }, raasoption.formRenderDelay - 1);
     }
-
     //  jQuery('#lr-loading').hide();
 });
+
 LoginRadiusRaaS.$hooks.socialLogin.onFormRender = function () {
     jQuery('#lr-loading').hide();
     jQuery('#social-registration-form').show();
     show_birthdate_date_block();
     //ShowformbyId("social_registration_from");
 };
+
+LoginRadiusRaaS.$hooks.setPasswordMeterConfiguration([{
+    case: "Worst", // Case Can not be changed
+    message: "#min_length length is required",//Your minimum password length message.
+    color: "Red" // Above message color
+}, {
+    case: "Bad", // Case Can not be changed
+    message: "Bad",
+    color: "Red"
+}, {
+    case: "weak", // Case Can not be changed
+    message: "weak",
+    color: "yellow"
+}, {
+    case: "Good", // Case Can not be change
+    message: "Good",
+    color: "Green"
+}, {
+    case: "Strong", // Case Can not be changed
+    message: "Strong",
+    color: "Green"
+}, {
+    case: "Secure", // Case Can not be changed
+    message: "Secure",
+    color: "Blue"
+}]);
+
 function callSocialInterface() {
     LoginRadiusRaaS.CustomInterface(".interfacecontainerdiv", raasoption);
     jQuery('#lr-loading').hide();
 }
+
 function initializeLoginRaasForm() {
 //initialize Login form
     LoginRadiusRaaS.init(raasoption, 'login', function (response) {
@@ -239,33 +271,34 @@ function initializeLoginRaasForm() {
 }
 
 function initializeRegisterRaasForm() {
-    LoginRadiusRaaS.init(raasoption, 'registration', function (response, data) {      
+    LoginRadiusRaaS.init(raasoption, 'registration', function (response, data) {
         if (response.access_token != null && response.access_token != "") {
-                    handleResponse(true, "");
-                    raasRedirect(response.access_token);
-        }else{ 
-             handleResponse(false, "An email has been sent to " + jQuery("#loginradius-raas-registration-emailid").val() + ".Please verify your email address.");
-                window.setTimeout(function() {
-                        window.location.replace(homeDomain);  
-                }, 7000);                   
+            handleResponse(true, "");
+            raasRedirect(response.access_token);
+        } else {
+            handleResponse(false, "An email has been sent to " + jQuery("#loginradius-raas-registration-emailid").val() + ".Please verify your email address.");
+            window.setTimeout(function () {
+                window.location.replace(homeDomain);
+            }, 7000);
         }
-    }, function (response) {      
+    }, function (response) {
         if (response[0].description != null) {
             handleResponse(false, response[0].description, "", "error");
         }
     }, "registeration-container");
     jQuery('#lr-loading').hide();
 }
+
 function initializeResetPasswordRaasForm(raasoption) {
     //initialize reset password form and handel email verifaction
     var vtype = $SL.util.getQueryParameterByName("vtype");
-    if (vtype != null && vtype != "") {  
-            LoginRadiusRaaS.init(raasoption, 'resetpassword', function (response) {
+    if (vtype != null && vtype != "") {     
+        LoginRadiusRaaS.init(raasoption, 'resetpassword', function (response) {
             handleResponse(true, "Password reset successfully");
             window.location = raasoption.emailVerificationUrl;
         }, function (response) {
             handleResponse(false, response[0].description, "", "error");
-        }, "resetpassword-container");  
+        }, "resetpassword-container");
         if (vtype == "reset") {
             LoginRadiusRaaS.init(raasoption, 'emailverification', function (response) {
                 handleResponse(true, "");
@@ -278,20 +311,33 @@ function initializeResetPasswordRaasForm(raasoption) {
             }, function (response) {
                 handleResponse(false, response[0].description, "", "error");
             });
+        } else if (vtype == "oneclicksignin") {     
+            LoginRadiusRaaS.init(raasoption, 'oneclicksignin', function (response) {         
+                if (response.access_token != null && response.access_token != "") {                  
+                  handleResponse(true, "");
+                  raasRedirect(response.access_token);
+                } else {
+                    handleResponse(false, "An email has been sent to " + jQuery("#loginradius-raas-registration-emailid").val() + ".Please verify your email address.");
+                    //handleResponse(true, "success");
+                }
+            }, function (response) {
+                //error             
+                handleResponse(false, response[0].description, "", "error");
+            });
         } else {
-            LoginRadiusRaaS.init(raasoption, 'emailverification', function (response) {               
+            LoginRadiusRaaS.init(raasoption, 'emailverification', function (response) {
                 //On Success this callback will call
                 if (response.access_token != null && response.access_token != "") {
                     handleResponse(true, "");
                     raasRedirect(response.access_token);
                 } else {
                     handleResponse(true, "Your email has been verified successfully");
-                } 
+                }
             }, function (response) {
                 // on failure this function will call ‘errors’ is an array of error with message.
                 handleResponse(false, response[0].description, "", "error");
             });
-        } 
+        }
     }
     jQuery('#lr-loading').hide();
 }
@@ -319,12 +365,12 @@ function initializeSocialRegisterRaasForm() {
 
 function initializeForgotPasswordRaasForms() {
     //initialize forgot password form
-    LoginRadiusRaaS.init(raasoption, 'forgotpassword', function (response) {     
-         handleResponse(false, "An email has been sent to " + jQuery("#loginradius-raas-forgotpassword-emailid").val() + " with reset Password link.");
-            window.setTimeout(function() {
-                    window.location.replace(homeDomain);
-            }, 7000);
-      
+    LoginRadiusRaaS.init(raasoption, 'forgotpassword', function (response) {
+        handleResponse(false, "An email has been sent to " + jQuery("#loginradius-raas-forgotpassword-emailid").val() + " with reset Password link.");
+        window.setTimeout(function () {
+            window.location.replace(homeDomain);
+        }, 7000);
+
     }, function (response) {
         if (response[0].description != null) {
             handleResponse(false, response[0].description, "", "error");
@@ -332,25 +378,26 @@ function initializeForgotPasswordRaasForms() {
     }, "forgotpassword-container");
     jQuery('#lr-loading').hide();
 }
+
 function initializeAccountLinkingRaasForms() {
     LoginRadiusRaaS.init(raasoption, "accountlinking", function (response) {
-        if(response.isPosted != true){
-        handleResponse(true, "");
-        raasRedirect(response);
-    } 
-    else {
-       window.location.replace(profileUrl+'?lr-message=linkingsuccess');
-    }    
+        if (response.isPosted != true) {
+            handleResponse(true, "");
+            raasRedirect(response);
+        } else {
+            window.location.replace(profileUrl + '?lr-message=linkingsuccess');
+        }
     }, function (response) {
-        jQuery('#fade').hide();         
+        jQuery('#fade').hide();
         if (response[0].description != null) {
             handleResponse(false, response[0].description, "", "error");
         }
     }, "interfacecontainerdiv");
     jQuery('#lr-loading').hide();
 }
+
 function initializeChangePasswordRaasForms() {
-   // initializeAccountLinkingRaasForms();
+    // initializeAccountLinkingRaasForms();
     LoginRadiusRaaS.passwordHandleForms("setpasswordbox", "changepasswordbox", function (israas) {
 //var password_div = jQuery('a[href*="/changepassword"]');
         var password_div = jQuery('#page-title');
@@ -374,11 +421,11 @@ function initializeChangePasswordRaasForms() {
     }, raasoption);
     jQuery('#lr-loading').hide();
 }
+
 function raasRedirect(token, name) {
     if (window.redirect) {
         redirect(token, name);
-    }
-    else {
+    } else {
         var token_name = name ? name : 'token';
         var source = typeof lr_source != 'undefined' && lr_source ? lr_source : '';
 

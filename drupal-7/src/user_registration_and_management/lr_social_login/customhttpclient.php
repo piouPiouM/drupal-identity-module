@@ -38,7 +38,8 @@ class CustomHttpClient  implements IHttpClient {
                 $request_url .= "?";
             } else {
                 $request_url .= "&";
-            }
+            }               
+   
             $request_url .= LoginRadius::queryBuild($query_array);
         }
         if (in_array('curl', get_loaded_extensions())) {
@@ -52,8 +53,8 @@ class CustomHttpClient  implements IHttpClient {
       $requestedData = array( 'GET' => $query_array,
                     'POST' => (isset($options['post_data']) ? $options['post_data'] : array()));
         
-      $debug_mode = variable_get('lr_social_login_debug_mode');
-      if(isset($debug_mode) && $debug_mode == '1'){
+      $debug_mode = variable_get('lr_social_login_debug_mode');         
+       if(isset($debug_mode) && $debug_mode == '1'){
         $response_type = 'error';
             if (!empty($response)) {
                 $result = json_decode($response);
@@ -62,16 +63,14 @@ class CustomHttpClient  implements IHttpClient {
                 }
             }
         
-      $nid =  db_insert('loginradius_log')
-        ->fields(array(
-          'api_url' => $request_url,
-          'request_type' => $method,
-          'data' => json_encode($requestedData),      
-          'response' =>  json_encode($response),
-          'response_type' => ucfirst($response_type),  
-          'timestamp' => REQUEST_TIME,         
-        ))
-        ->execute();       
+          $logData['endpoint'] = $request_url;
+          $logData['method'] = $method;
+          $logData['data'] = !empty($requestedData) ? json_encode($requestedData) : '';
+          $logData['response'] = json_encode($response);
+          $logData['response_type'] = ucfirst($response_type);
+          $logData['created_date'] = date("Y-m-d h:i:s A") ;
+          $status = $response_type != 'success' ? WATCHDOG_ERROR : WATCHDOG_INFO;
+          watchdog('loginradius_logging',  serialize($logData), array(), $status);
       }
         if (!empty($response)) {  
             $result = json_decode($response);
@@ -114,11 +113,11 @@ class CustomHttpClient  implements IHttpClient {
             curl_setopt($curl_handle, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
         } else {
-            curl_setopt($curl_handle, CURLOPT_HEADER, 1);
-            $effectiveUrl = curl_getinfo($curl_handle, CURLINFO_EFFECTIVE_URL);
-            curl_close($curl_handle);
-            $curl_handle = curl_init();
-            $url = str_replace('?', '/?', $effectiveUrl);
+//            curl_setopt($curl_handle, CURLOPT_HEADER, 1);
+//            $effectiveUrl = curl_getinfo($curl_handle, CURLINFO_EFFECTIVE_URL);
+//            curl_close($curl_handle);
+//            $curl_handle = curl_init();
+            $url = str_replace('?', '/?', $request_url);
             curl_setopt($curl_handle, CURLOPT_URL, $url);
             curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
         }

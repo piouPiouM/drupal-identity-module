@@ -48,10 +48,10 @@ function lr_custom_interface_add_social_linking_widget() {
  */
 function  lr_custom_interface_check_send_verification_email($account, $form_state) {
   $status = FALSE;
-
   if ((variable_get('user_email_verification', TRUE) && variable_get('lr_social_login_skip_email_verification', '') == 1) || (!variable_get('user_email_verification', TRUE))) {
     $status = TRUE;
   }
+
   return $status;
 }
 

@@ -121,6 +121,9 @@
     background-color: #f9f9f9;
     word-break: break-all
 }
+#tabs-3 #sociallogin_userprofile_table{
+    table-layout:auto;
+}
 .inputtxtarea {
     width: 457px;
     height: 81px;

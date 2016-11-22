@@ -10,13 +10,15 @@ if (!empty($api_key)) :
   drupal_add_js('//hub.loginradius.com/include/js/LoginRadius.js', array(
     'type' => 'external',
     'scope' => 'header',
-    'weight' => -10,
+    'weight' => -90,
   ));
-  drupal_add_js(drupal_get_path('module', 'lr_social_login') . '/js/sociallogin_interface.js', array(
+   if (!module_exists('lr_custom_interface')) :
+    drupal_add_js(drupal_get_path('module', 'lr_social_login') . '/js/sociallogin_interface.js', array(
     'type' => 'file',
       'scope' => 'header',
       'weight' => -10,
   ));
+   endif;
 endif;
 ?>
 <div class="interfacecontainerdiv"></div>

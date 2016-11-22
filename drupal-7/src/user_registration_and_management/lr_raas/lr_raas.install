@@ -6,6 +6,38 @@
  */
 
 /**
+ * Implements hook_uninstall().
+ */
+function lr_raas_uninstall() {
+  $deleted_keys = array( 
+    'lr_raas_inform_validation_messages',
+    'lr_raas_terms_and_condition_html',
+    'lr_raas_form_render_delay',
+    'lr_raas_min_password_length',
+    'lr_raas_max_password_length',
+    'lr_raas_v2_recaptcha_site_key',
+    'lr_raas_forgot_password_template',
+    'lr_raas_email_verification_template',
+    'lr_raas_custom_options',
+    'lr_raas_email_verification_condition',
+    'lr_raas_enable_login_on_email_verification',
+    'lr_raas_prompt_password_on_social_login',
+    'lr_raas_enable_user_name',
+    'lr_raas_ask_email_always_for_unverified',
+    'lr_raas_hook_customize',
+    'lr_raas_hook_valiadtion_message',
+    'lr_raas_one_click_sign_in',
+    'lr_raas_one_click_login_button_label',
+    'lr_raas_enable_remember_me',
+    'lr_raas_check_password_strength',
+    'lr_raas_ask_required_field_on_traditional_login'
+  );
+  foreach($deleted_keys as $key){
+    variable_del($key);
+  }
+}
+
+/**
  * Implements hook_schema().
  */
 function lr_raas_schema() {

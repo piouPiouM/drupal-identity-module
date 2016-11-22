@@ -27,7 +27,7 @@ window.onload = function () {
         counter_vertical_show();
     });
   
-    var sharing = ["Facebook","GooglePlus","Linkedin","Twitter","Pinterest","Email","Google","Digg","Reddit","Vkontakte","Tumblr","MySpace","Delicious","Print"];    
+    var sharing = ["Facebook","GooglePlus","Linkedin","Twitter","Pinterest","Email","Google","Digg","Reddit","Vkontakte","Tumblr","Delicious","Print"];    
     sharingproviderlist(sharing);
     var counter = ["Facebook Like","Facebook Recommend","Facebook Send","Twitter Tweet","Pinterest Pin it","LinkedIn Share","StumbleUpon Badge","Reddit","Google+ +1","Google+ Share"];    
     counterproviderlist(counter);

@@ -63,103 +63,16 @@ function lr_social_login_menu() {
     'weight' => 1,
     'file' => 'includes/lr_social_login.admin.inc',
   );
-    $items['lr_social_login/token_handler'] = array(
+   $items['lr_social_login/token_handler'] = array(
     'page callback' => 'drupal_get_form',
     'page arguments' => array('lr_social_login_user_register_validate'),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
-  $items['admin/config/people/userregistration/logs'] = array(
-    'title' => 'Debug logs',
-    'page callback' => 'lr_social_login_log_management',
-    'access arguments' => array('administer userregistration'),
-    'type' => MENU_LOCAL_TASK,
-    'weight' => 1,
-  ); 
-  $items['admin/config/people/userregistration/clear-log'] = array(
-    'page callback' => 'lr_social_login_clear_log',
-    'page arguments' => array(1, 3),
-    'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
-  );
   return $items;
 }
 
-/**
- * Manage ERROR Logs().
- **
- */
-function lr_social_login_log_management() {  
-  
-    $lrLog = db_query("SELECT * FROM {loginradius_log} ORDER BY log_id DESC LIMIT 20");
-    $lrLog = $lrLog->fetchAll();    
-   
-  if(isset($lrLog) && !empty($lrLog)){  
-    $style = '';    
-    $output = '<table id="sociallogin_userprofile_table"  cellspacing="0" style="word-break: break-all;">';
-      $output .= '<thead>';
-        $style = 'style="background-color:#fcfcfc"'; 
-             $output .= '<tr ' . $style . '>'; 
-              $output .= '<td colspan="7" scope="col" class="manage-colum" style="font-weight: bold;"><a href="clear-log">Clear Log</a></td>'; 
-             $output .= '</tr>'; 
-        $output .= '<tr ' . $style . '>';      
-        foreach ($lrLog[0] as $key => $val) {  
-          $output .= '<th scope="col" class="manage-colum" style="font-weight: bold;">'. str_replace('_', ' ', ucfirst($key)) . '</th>';  
-        }
-      
-        $output .= '</tr>';               
-        $output .= '</thead>';
-        $output .= '<tfoot>';
-        $style = 'style="background-color:#fcfcfc"';
-        $output .= '<tr ' . $style . '>';   
-        $count = 0;
-          
-        foreach ($lrLog as $value) {         
-          foreach($value as $key=>$val){ 
-            if($key == 'timestamp'){
-              $output .= '<th scope="col" class="manage-colum">' . date('d/m/Y H:i:s', $val) . '</th>';
-            }else if($key == 'response') {
-              $output .= '<th scope="col" class="manage-colum comment more">' .  json_decode($val). '</th>';       
-            } else{
-              $output .= '<th scope="col" class="manage-colum">' .  $val . '</th>';   
-            } 
-          } 
-          $output .= '</tr>';                
-        }   
-      $output .= '</tfoot>';
-      } else {
-          $style = '';  
-      $output = '<table id="sociallogin_userprofile_table"  cellspacing="0" style="word-break: break-all;">'; 
-      $output .= '<thead>';
-        $style = 'style="background-color:#fcfcfc"';
-          $output .= '<tr ' . $style . '>';  
-          $output .= '<th scope="col" class="manage-colum" style="font-weight: bold;">Log id</th>'; 
-          $output .= '<th scope="col" class="manage-colum" style="font-weight: bold;">Api url</th>'; 
-          $output .= '<th scope="col" class="manage-colum" style="font-weight: bold;">Request type</th>'; 
-          $output .= '<th scope="col" class="manage-colum" style="font-weight: bold;">Data</th>'; 
-          $output .= '<th scope="col" class="manage-colum" style="font-weight: bold;">Response</th>'; 
-          $output .= '<th scope="col" class="manage-colum" style="font-weight: bold;">Response type</th>';    
-          $output .= '<th scope="col" class="manage-colum" style="font-weight: bold;">Timestamp</th>';           
-          $output .= '</tr>';
-          $output .= '</thead>';
-          $output .= '<tfoot>';
-        $style = 'style="background-color:#fcfcfc"';
-        $output .= '<tr ' . $style . '>';                
-        $output .= '<td colspan="7" scope="col" class="manage-colum">No log messages available</td>';         
-        $output .= '</tr>';    
-        $output .= '</tfoot>'; 
-        $output .= '</table>'; 
-      }
-  return $output;        
-}
 
-
-function lr_social_login_clear_log(){  
-     db_delete('loginradius_log')      
-        ->execute();      
-     drupal_goto('admin/config/people/userregistration/logs');    
-     
-}
 /**
  * @return null|string
  *
@@ -261,12 +174,16 @@ function lr_social_login_user_update(&$edit, $account, $category) {
   if (isset($_POST['op']) && ($_POST['op'] == 'Update' || $_POST['op'] == 'Save') && !variable_get('user_email_verification', TRUE)) {
     if (user_access('administer site configuration')) {
       if (!$account->login) {
+        try {  
         db_update('users')
           ->fields(array(
             'login' => REQUEST_TIME,
           ))
           ->condition('uid', $account->uid)
           ->execute();
+        } catch (Exception $e) {
+          watchdog('loginradius_logging', $e, array(), WATCHDOG_ERROR);
+        }
       }
     }
   }
@@ -638,13 +555,14 @@ function lr_social_login_preprocess_page(&$vars, $hook) {
       'type' => 'file',
       'scope' => 'header',
 	  'weight' => -12,
-    ));    
+    ));      
+   }  
     drupal_add_js(drupal_get_path('module', 'lr_social_login') . '/js/LoginRadiusLog.js', array(
       'type' => 'file',
       'scope' => 'header',
 	  'weight' => -12,
     ));    
-  }
+ 
 }
 /**
  * Function that process login/registration/popup functionality.
@@ -717,7 +635,7 @@ function lr_social_login_user_register_validate($form, &$form_state) {
       }
   }
   // Check loginradius token is posted on this page.
-  if (empty($token)) {
+  if (empty($token) || $token == 'undefined') {
     return;
   }  
     try {    
@@ -742,8 +660,7 @@ function lr_social_login_user_register_validate($form, &$form_state) {
   }
   // Advanced module LR Code Hook End.
   // Handle login/registration functionality when user os not logged in.
-  if (!user_is_logged_in()) {       
-
+  if (!user_is_logged_in()) {  
     if (isset($userprofile->ID) && $userprofile->ID != '') {
       $userprofile = lr_social_login_getuser_data($userprofile);     
     //  $userprofile->widget_token = trim($token);
@@ -752,11 +669,11 @@ function lr_social_login_user_register_validate($form, &$form_state) {
 
       if ($condition) {  
         $account = user_external_load($userprofile->ID);
-        if (isset($account->uid) && $account->uid != 0) {         
+        if (isset($account->uid) && $account->uid != 0) {        
           return $form = lr_social_login_provide_login_to_unblock_user($account,
             $userprofile, $form, $form_state);
         }
-        else {             
+        else {                    
           lr_social_login_enable_force_registration($userprofile);
           $_SESSION['lrdata'] = $userprofile;
           $textemailpoup = variable_get('lr_social_login_emailrequired_popup_text');
@@ -770,7 +687,7 @@ function lr_social_login_user_register_validate($form, &$form_state) {
           $form['lr_social_login_popup'] = lr_social_login_get_popup_form_element_array($theme);
           return $form;
         }
-      }
+      }       
       return $form = lr_social_login_check_existing_user($form, $form_state, $userprofile);
     }
     elseif (!user_is_logged_in()) {
@@ -778,7 +695,6 @@ function lr_social_login_user_register_validate($form, &$form_state) {
     }
   }
   elseif (!empty($token)) { 
-
     if ((!isset($post_value['lr_source'])) || (isset($post_value['lr_source']) && !in_array($post_value['lr_source'], array(
           'wall_post',
           'friend_invite',

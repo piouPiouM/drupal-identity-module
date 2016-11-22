@@ -107,7 +107,7 @@ function lr_social_profile_data_delete($table_name, $user_id) {
       ->execute();
   }
   catch (Exception $e) {
-    watchdog_exception('type', $e);
+    watchdog('loginradius_logging', $e, array(), WATCHDOG_ERROR);
   }
 }
 
@@ -126,7 +126,7 @@ function lr_social_profile_data_insert($table_name, $data_values) {
         ->execute();
     }
     catch (Exception $e) {
-      watchdog_exception('type', $e);
+     watchdog('loginradius_logging', $e, array(), WATCHDOG_ERROR);
     }
   }
 }
@@ -165,7 +165,7 @@ function lr_social_profile_data_update($table_name, $user_id, $data_values) {
       ->execute();
   }
   catch (Exception $e) {
-    watchdog_exception('type', $e);
+    watchdog('loginradius_logging', $e, array(), WATCHDOG_ERROR);
   }
 }
 
@@ -1243,7 +1243,7 @@ function lr_social_profile_data_save($user_id, $userprofile) {
           }
           $insert->execute();
         } catch (Exception $e) {
-          watchdog_exception('type', $e);
+          watchdog('loginradius_logging', $e, array(), WATCHDOG_ERROR);
         }
       }
     }

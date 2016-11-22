@@ -21,7 +21,7 @@ function lr_mailchimp_settings_form($form, &$form_state) {
   );
   $form[$mailchimp_group]['lr_mailchimp_enable'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want to automatically subscribe users to mailchimp List when they register through social login?'),
+    '#title' => t('Do you want to enable mailchimp?'),
     '#prefix' => '<div id="mailchimp-enable-error"></div>',
     '#default_value' => variable_get('lr_mailchimp_enable', 0),
     '#options' => array(

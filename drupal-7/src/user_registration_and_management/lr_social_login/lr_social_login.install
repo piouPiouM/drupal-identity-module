@@ -32,27 +32,19 @@ function lr_social_login_uninstall() {
     'lr_social_login_force_registration',
     'lr_social_login_link_account',
     'lr_social_login_email_required',
+    'lr_social_login_update_profile',
+    'lr_social_login_send_user_credentials',
+    'lr_social_login_email_content',
+    'lr_social_login_debug_mode',
+    'lr_social_login_commenting_enable',
+    'lr_social_login_account_linking',
     'lr_social_login_emailrequired_popup_top',
     'lr_social_login_emailrequired_popup_text',
     'lr_social_login_emailrequired_popup_wrong',
     'lr_social_login_userlogin_redirect',
     'lr_social_login_custom_redirection',
     'lr_social_login_user_fields',
-    'lr_social_login_profile_fields',
-    'lr_raas_inform_validation_messages',
-    'lr_raas_terms_and_condition_html',
-    'lr_raas_form_render_delay',
-    'lr_raas_min_password_length',
-    'lr_raas_max_password_length',
-    'lr_raas_v2_recaptcha_site_key',
-    'lr_raas_forgot_password_template',
-    'lr_raas_email_verification_template',
-    'lr_raas_custom_options',
-    'lr_raas_email_verification_condition',
-    'lr_raas_enable_login_on_email_verification',
-    'lr_raas_prompt_password_on_social_login',
-    'lr_raas_enable_user_name',
-    'lr_raas_ask_email_always_for_unverified'
+    'lr_social_login_profile_fields'    
   );
   foreach($deleted_keys as $key){
     variable_del($key);
@@ -63,6 +55,7 @@ function lr_social_login_uninstall() {
  * Implements hook_schema().
  */
 function lr_social_login_schema() {
+    $schema = array();
   if(!db_table_exists('loginradius_mapusers')){
   $schema['loginradius_mapusers'] = array(
     'description' => 'Stores Engage linked account information.',
@@ -88,56 +81,7 @@ function lr_social_login_schema() {
     ),
     'primary key' => array('aid'),
   );
-  return $schema;
-  }   
   
-  if(!db_table_exists('loginradius_log')){
-  $schema['loginradius_log'] = array(
-    'description' => 'Stores API Error/Success data information.',
-    'fields' => array(
-      'log_id' => array(
-        'type' => 'serial',      
-        'unsigned' => TRUE,
-        'not null' => TRUE,
-        'description' => 'Log id of log table.',
-      ),
-      'api_url' => array(
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'description' => 'The API Url.',
-      ),
-      'request_type' => array(
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'description' => 'The API Request.',
-      ),
-      'data' => array(
-        'type' => 'text',       
-        'not null' => TRUE,
-        'description' => 'The API Data.',
-      ),
-      'response' => array(
-        'type' => 'text',      
-        'not null' => TRUE,
-        'description' => 'The API Response.',
-      ),
-      'response_type' => array(
-        'type' => 'varchar',
-        'length' => 255,
-        'not null' => TRUE,
-        'description' => 'The API Response type',
-      ),     
-      'timestamp' => array(
-        'type' => 'int',
-        'length' => 12,
-        'not null' => TRUE,
-        'description' => 'The created date time.',
-      ),
-    ),
-    'primary key' => array('log_id'),
-  );
-  return $schema;
-  } 
+  }
+   return $schema;
 }

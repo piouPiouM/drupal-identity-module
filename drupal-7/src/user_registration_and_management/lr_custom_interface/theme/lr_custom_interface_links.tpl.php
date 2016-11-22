@@ -11,12 +11,7 @@ if (variable_get('lr_social_login_enable', 1)):
   drupal_add_js(drupal_get_path('module', 'lr_custom_interface') . '/js/LoginRadiusLoginFrontEnd.js', array(
       'type' => 'file',
       'scope' => 'footer',
-    ));
-  drupal_add_js(drupal_get_path('module', 'lr_social_login') . '/js/sociallogin_interface.js', array(
-      'type' => 'file',
-      'scope' => 'header',
-      'weight' => -10,
-    ));
+    ));  
   drupal_add_js('//cdn.loginradius.com/hub/prod/js/CustomeInterface.2.js', array(
     'type' => 'external',
     'scope' => 'header',

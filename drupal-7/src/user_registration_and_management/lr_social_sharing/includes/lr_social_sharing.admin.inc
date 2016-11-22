@@ -67,11 +67,11 @@ display_horizontal_widget();
   $share_group = 'share';
   $form[$share_group] = array(
     '#type' => 'fieldset',
-    '#title' => t('Simplified Open Social Share Settings'),
+    '#title' => t('Simplified Social Share Settings'),
   );
   $form[$share_group]['simplified_open_social_share_horizontal'] = array(
     '#type' => 'item',
-    '#prefix' => '<div><b>' . t('What open social sharing widget theme do you want to use across your website?<div class="description">Horizontal and Vertical themes can be enabled simultaneously</div>') . '</b></div>',
+    '#prefix' => '<div><b>' . t('Which social sharing widget theme do you want to use across your website?<div class="description">Horizontal and Vertical themes can be enabled simultaneously</div>') . '</b></div>',
     '#markup' => ' <div id="oss_tabs"><ul><li><a id="simplified_open_social_share_horizontal" onclick="display_horizontal_widget();">Horizontal widget</a></li><li><a id="simplified_open_social_share_veritical" onclick="hidden_horizontal_widget();">Vertical widget</a></li><li><a id="simplified_open_social_share_advance_settings" onclick="display_advance_widget();">Advance Settings</a></li></ul>',
   );
   $form[$share_group]['simplified_open_social_share_selected_share_interface'] = array(
@@ -82,7 +82,7 @@ display_horizontal_widget();
   );
   $form[$share_group]['simplified_open_social_share_enable_horizontal_share'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want to enable horizontal open social sharing for your website?'),
+    '#title' => t('Do you want to enable horizontal social sharing for your website?'),
     '#default_value' => variable_get('simplified_open_social_share_enable_horizontal_share', 1),
     '#options' => array(
       1 => t('Yes'),
@@ -91,7 +91,7 @@ display_horizontal_widget();
   );
   $form[$share_group]['simplified_open_social_share_enable_vertical_share'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want to enable vertical open social sharing for your website'),
+    '#title' => t('Do you want to enable vertical social sharing for your website'),
     '#default_value' => variable_get('simplified_open_social_share_enable_vertical_share', 0),
     '#options' => array(
       1 => t('Yes'),
@@ -100,7 +100,7 @@ display_horizontal_widget();
   );
   $form[$share_group]['opensocialshare_label_string'] = array(
     '#type' => 'textfield',
-    '#title' => t('What text do you want to display above the open social sharing widget?'),
+    '#title' => t('What text do you want to display above the social sharing widget?'),
     '#default_value' => variable_get('opensocialshare_label_string', 'Share it now!'),
     '#description' => t('Leave empty for no text.'),
   );
@@ -145,7 +145,7 @@ display_horizontal_widget();
     '#type' => 'item',
     '#id' => 'socialcounter_show_providers_list',
     '#class' => 'form-item form-type-checkboxes form-item-opensocialshare-counter-show-providers-list',
-    '#title' => t('What sharing networks do you want to show in the sharing widget? (All other sharing networks will be shown as part of Social9 sharing icon)'),
+    '#title' => t('Which sharing networks do you want to show in the sharing widget? (All of the other sharing networks will be shown as a part of sharing icon)'),
     '#default_value' => variable_get('socialcounter_rearrange_providers_list'),
     '#suffix' => '<div id="socialcounter_hidden_field" style="display:none;">',
   );
@@ -178,10 +178,10 @@ display_horizontal_widget();
   $form[$share_group]['opensocialshare_show_providers_list'] = array(
     '#type' => 'item',
     '#id' => 'opensocialshare_providers_list',
-    '#title' => t('What sharing networks do you want to show in the sharing widget? (All other sharing networks will be shown as part of Social9 sharing icon)'),
+    '#title' => t('Which sharing networks do you want to show in the sharing widget? (All of the other sharing networks will be shown as a part of sharing icon)'),
     '#default_value' => variable_get('simplified_open_social_share_rearrange_providers_list'),
     '#prefix' => '</div><div id="loginRadiusSharingLimit" style="color:red; display:none; margin-bottom: 5px;">' . t('You can select only 9 providers.') . '</div>',
-    '#suffix' => '<div id="rearrange_sharing_text"><b>' . t('What sharing network order do you prefer for your sharing widget?(Drag around to set the order)') . '</b></div><ul id="simplified_open_social_share_rearrange_providers" class="simplified_open_social_share_rearrange_providers">',
+    '#suffix' => '<div id="rearrange_sharing_text"><b>' . t('Which sharing network order do you prefer for your sharing widget?(Drag around to set the order)') . '</b></div><ul id="simplified_open_social_share_rearrange_providers" class="simplified_open_social_share_rearrange_providers">',
   );
 
   foreach (variable_get("simplified_open_social_share_rearrange_providers_list") as $provider) {
@@ -213,7 +213,7 @@ display_horizontal_widget();
   $form[$share_group]['opensocialshare_counter_vertical_show_providers_list'] = array(
     '#type' => 'item',
     '#id' => 'socialcounter_vertical_show_providers_list',
-    '#title' => t('What sharing networks do you want to show in the sharing widget? (All other sharing networks will be shown as part of Social9 sharing icon)'),
+    '#title' => t('Which sharing networks do you want to show in the sharing widget? (All of the other sharing networks will be shown as a part of sharing icon)'),
     '#default_value' => variable_get('socialcounter_vertical_rearrange_providers_list'),
     '#suffix' => '<div id="socialcounter_vertical_hidden_field" style="display:none;">',
   );
@@ -247,10 +247,10 @@ display_horizontal_widget();
   $form[$share_group]['opensocialshare_vetical_show_providers_list'] = array(
     '#type' => 'item',
     '#id' => 'opensocialshare_vetical_show_providers_list',
-    '#title' => t('What sharing networks do you want to show in the sharing widget? (All other sharing networks will be shown as part of Social9 sharing icon)'),
+    '#title' => t('Which sharing networks do you want to show in the sharing widget? (All of the other sharing networks will be shown as a part of sharing icon)'),
     '#default_value' => variable_get('opensocialshare_vertical_rearrange_providers_list'),
     '#prefix' => '</div><div id="loginRadiusSharingLimit_vertical" style="color:red; display:none; margin-bottom: 5px;">' . t('You can select only 9 providers.') . '</div>',
-    '#suffix' => '<div id="rearrange_sharing_text_vertical"><b>' . t('What sharing network order do you prefer for your sharing widget?(Drag around to set the order)') . '</b></div><ul id="opensocialshare_vertical_rearrange_providers" class="opensocialshare_vertical_rearrange_providers">',
+    '#suffix' => '<div id="rearrange_sharing_text_vertical"><b>' . t('Which sharing network order do you prefer for your sharing widget?(Drag around to set the order)') . '</b></div><ul id="opensocialshare_vertical_rearrange_providers" class="opensocialshare_vertical_rearrange_providers">',
   );
 
   foreach (variable_get("opensocialshare_vertical_rearrange_providers_list") as $provider) {
@@ -287,7 +287,7 @@ display_horizontal_widget();
     '#type' => 'checkbox',
     '#title' => t('Show at the top of content.'),
     '#default_value' => variable_get('opensocialshare_position_top', 1) ? 1 : 0,
-    '#prefix' => '<div id="horizontal_sharing_show" style="clear:both;"> <b>Select the position of Social sharing interface</b>',
+    '#prefix' => '<div id="horizontal_sharing_show" style="clear:both;"> <b>Select the position of social sharing interface</b>',
   );
   $form[$share_group]['opensocialshare_position_bottom'] = array(
     '#type' => 'checkbox',
@@ -297,7 +297,7 @@ display_horizontal_widget();
   );
   $form[$share_group]['opensocialshare_show_pages'] = array(
     '#type' => 'radios',
-    '#title' => t('Show social share on specific pages'),
+    '#title' => t('Show social sharing on specific pages'),
     '#default_value' => variable_get('opensocialshare_show_pages', 0),
     '#options' => array(
       0 => t('All pages except those listed'),
@@ -307,12 +307,12 @@ display_horizontal_widget();
   $form[$share_group]['opensocialshare_show_exceptpages'] = array(
     '#type' => 'textarea',
     '#default_value' => variable_get('opensocialshare_show_exceptpages', ''),
-    '#description' => t('Enter a page title(you give on page creation) or node id (if url is http://example.com/node/1 then enter 1(node id)) with comma sepreted'),
+    '#description' => t('Enter the page title(you gave on page creation) or node id (if url is http://example.com/node/1 then enter 1(node id)) separated with comma'),
     '#rows' => 5,
   );
   $form[$share_group]['opensocialshare_vertical_show_pages'] = array(
     '#type' => 'radios',
-    '#title' => t('Show social share on specific pages'),
+    '#title' => t('Show social sharing on specific pages'),
     '#default_value' => variable_get('opensocialshare_vertical_show_pages', 0),
     '#options' => array(
       0 => t('All pages except those listed'),
@@ -322,7 +322,7 @@ display_horizontal_widget();
   $form[$share_group]['opensocialshare_vertical_show_exceptpages'] = array(
     '#type' => 'textarea',
     '#default_value' => variable_get('opensocialshare_vertical_show_exceptpages', ''),
-    '#description' => t('Enter a page title(you give on page creation) or node id (if url is http://example.com/node/1 then enter 1(node id)) with comma sepreted'),
+    '#description' => t('Enter the page title(you gave on page creation) or node id (if url is http://example.com/node/1 then enter 1(node id)) separated with comma'),
     '#rows' => 5,    
   );    
   
@@ -339,7 +339,7 @@ display_horizontal_widget();
   ); 
   $form[$share_group]['opensocialshare_is_email_content_read_only'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want to make the email content read only<a title="Your readers wont be able to change the Email Content if its read only."  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
+    '#title' => t('Do you want to make the email content read only <a title="Your readers wont be able to change the Email Content if its read only."  style="text-decoration:none;"> (<span style="cursor: pointer !important;">?</span>)</a>'),
     '#default_value' => variable_get('opensocialshare_is_email_content_read_only', 'false'),
     '#options' => array(
       'true' => t('Yes (read only)'),
@@ -349,7 +349,7 @@ display_horizontal_widget();
   
   $form[$share_group]['opensocialshare_is_shorten_url'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want to use short URL during sharing<a title="Enable this if you want the URL to be shortened using Ish.re"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
+    '#title' => t('Do you want to use short URL during sharing <a title="Enable this if you want the URL to be shortened using Ish.re"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
     '#default_value' => variable_get('opensocialshare_is_shorten_url', 'false'),
     '#options' => array(
       'true' => t('Yes'),
@@ -359,12 +359,12 @@ display_horizontal_widget();
  
   $form[$share_group]['opensocialshare_facebook_app_id'] = array(
     '#type' => 'textfield',
-    '#title' => t('Enter your Facebook App ID<a title="Enter the Facebook App Id if you want to track social sharing on your Facebook app"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
+    '#title' => t('Enter your Facebook App ID <a title="Enter the Facebook App Id if you want to track social sharing on your Facebook app"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
     '#default_value' => variable_get('opensocialshare_facebook_app_id'),    
   );      
   $form[$share_group]['opensocialshare_is_total_share'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want to enable Total Share to display the total share count on your website<a title="Display the total shares URL got from all social providers"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
+    '#title' => t('Do you want to enable Total Share to display the total share count on your website <a title="Display the total shares URL got from all social providers"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
     '#default_value' => variable_get('opensocialshare_is_total_share', 'false'),
     '#options' => array(
       'true' => t('Yes'),
@@ -373,7 +373,7 @@ display_horizontal_widget();
   );     
   $form[$share_group]['opensocialshare_is_open_single_window'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want to open all providers in a single window<a title="Disabling this opens all sharing providers in a new Popup"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
+    '#title' => t('Do you want to open all providers in a single window <a title="Disabling this opens all sharing providers in a new Popup"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
     '#default_value' => variable_get('opensocialshare_is_open_single_window', 'false'),
     '#options' => array(
       'true' => t('Yes'),
@@ -388,14 +388,14 @@ display_horizontal_widget();
     '#attributes' => array(
     'onchange' => "showAndHidePopupWindow();",
     ),
-    '#prefix' => '<div id="popup_window_size" style="clear:both;"> <b>Do you want to enable custom popup window size<a title="Check this if you want to change default Popup Window Size. [Default Size 530*530 Px]"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a></b>' 
+    '#prefix' => '<div id="popup_window_size" style="clear:both;"> <b>Do you want to enable custom popup window size <a title="Check this if you want to change default Popup Window Size. [Default Size 530*530 Px]"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a></b>' 
   );
    
   $form[$share_group]['opensocialshare_popup_window_size_height'] = array(
     '#type' => 'textfield',
     '#title' => t('Popup window height'),
-    '#default_value' => variable_get('opensocialshare_popup_window_size_height', ''),
-    '#element_validate' => array('element_validate_number'),
+    '#default_value' => variable_get('opensociaelement_validate_numberlshare_popup_window_size_height', ''),
+//    '#element_validate' => array('element_validate_number'),
   );
   
   $form[$share_group]['opensocialshare_popup_window_size_width'] = array(
@@ -403,23 +403,23 @@ display_horizontal_widget();
     '#title' => t('Popup window width'),
     '#default_value' => variable_get('opensocialshare_popup_window_size_width', ''),
     '#description' => t('If you want to change popup window size, Make sure to fill both height and width(Ex.400,450).'),
-    '#element_validate' => array('element_validate_number'),
+//    '#element_validate' => array('element_validate_number'),
     '#suffix' => '</div>',
   );  
    
   $form[$share_group]['opensocialshare_twitter_mention'] = array(
     '#type' => 'textfield',
-    '#title' => t('Enter your desired Twitter handle to mention during a Twitter share<a title="Handle will be mentioned as suffix as via @twitterhandle"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
+    '#title' => t('Enter your desired Twitter handle to mention during a Twitter share <a title="Handle will be mentioned as suffix as via @twitterhandle"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
     '#default_value' => variable_get('opensocialshare_twitter_mention', ''),    
   );    
   $form[$share_group]['opensocialshare_twitter_hash_tags'] = array(
     '#type' => 'textfield',
-    '#title' => t('Enter your desired Twitter hash tag to be used during a Twitter share<a title="Hashtag will be added to all tweets"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
+    '#title' => t('Enter your desired Twitter hash tag to be used during a Twitter share <a title="Hashtag will be added to all tweets"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a>'),
     '#default_value' => variable_get('opensocialshare_twitter_hash_tags', ''),    
   );      
    $form[$share_group]['opensocialshare_is_mobile_friendly'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want to enable mobile friendly sharing widget<a title="Enable this option to show a mobile sharing interface to mobile users"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a> '),
+    '#title' => t('Do you want to enable mobile friendly sharing widget <a title="Enable this option to show a mobile sharing interface to mobile users"  style="text-decoration:none"> (<span style="color:#3CF;">?</span>)</a> '),
     '#default_value' => variable_get('opensocialshare_is_mobile_friendly', 'false'),
     '#options' => array(
       'true' => t('Yes'),
@@ -429,11 +429,11 @@ display_horizontal_widget();
   
   $form[$share_group]['opensocialshare_custom_options'] = array(
     '#type' => 'textarea',
-    '#title' => t('Please enter custom options for open social sharing'),
+    '#title' => t('Please enter custom options for social sharing'),
     '#id' => 'add_custom_options',
     '#rows' => 4,
     '#default_value' => variable_get('opensocialshare_custom_options', ''),    
-    '#description' => t('<p style="color:black;">Choose form the list of options you want to customize from the <a target="_blank" href="http://www.social9.com/docs/custom-option-list">link</a></p>'),
+    '#description' => t('<p style="color:black;">Choose from the list of options you want to customize from the <a target="_blank" href="http://www.social9.com/docs/custom-option-list">link</a></p>'),
     '#attributes' => array(
     'onchange' => "openSocialShareCheckValidJson();",
     ),
@@ -526,7 +526,7 @@ function lr_social_share_get_authentication($apikey, $apisecret) {
 
       return $data;
     } catch (Exception $e) {
-      watchdog_exception('type', $e);
+      //watchdog('loginradius_logging', $e, array(), WATCHDOG_ERROR);
     }
   }
 }

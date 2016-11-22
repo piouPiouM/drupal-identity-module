@@ -5,6 +5,16 @@
 ul.loginradiuscustomsso-idlinks {
   list-style-type: none;
 }
+#registration-password-strength-meter {
+ width:377px;
+}
+#changepassword-password-strength-meter {
+ display: block;
+ width: 177px;
+}
+#setpassword-password-strength-meter { 
+ width: 177px;
+}
 
 #registeration-container input[type="checkbox"] {
     float: left;
@@ -426,6 +436,138 @@ div.loginradius-raas-validation-message {
 .lr-linked-data.lr_singleglider_200 span.lr_providericons {
   margin: 0 6px 2px;
 }
-#tabs-3 #sociallogin_userprofile_table{
-    table-layout:auto;
+.editHooksPopup {
+    color: #fff;
+    cursor: pointer;
+    padding: 5px 15px;
+    background: green;
+    float: left;
+    border-radius: 30px;
+    font-weight: bold;
+}
+.editHooksPopup.reset{
+    background: #dddddd;
+    margin-left: 5px;
+    color: #000000;
+}
+.editCustomizeHooksPopup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+.editCustomizeHooksPopup .saveButton{
+    cursor: pointer;
+    background: green;
+    color: #fff;
+    padding: 5px 15px;
+    float: left;
+    border-radius: 3px;
+}
+.editCustomizeHooksPopup .resetButton{
+    cursor: pointer;
+    background: #dddddd;
+    color: #000;
+    margin-left: 5px;
+    padding: 5px 15px;
+    float: left;
+    border-radius: 3px;
+}
+
+.editCustomizeHooksPopup .popupModal-content {
+    border-radius: 0 23px;
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 50%;
+    min-width: 520px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop !important;
+    -webkit-animation-duration: 0.4s !important;
+    animation-name: animatetop !important;
+    animation-duration: 0.4s !important;
+}
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+.editCustomizeHooksPopup .popupModal-body .span3 {
+    font-weight: bold;
+}
+.editCustomizeHooksPopup .popupModal-header{
+    padding: 2px 16px;
+    background-color: #dddddd;
+    color: #000000;
+    border-radius: 0 20px 0 0;
+}
+.editCustomizeHooksPopup .popupModal-footer{
+    padding: 2px 16px;
+    background-color: #dddddd;
+    color: #000000;
+    border-radius: 0 0 0 20px;
+}
+.editCustomizeHooksPopup .close{
+    margin-top: 10px;
+    margin-left: 99%;
+    cursor: pointer;
+}
+.editCustomizeHooksPopup .popupModal-body {padding: 2px 16px;}
+.editCustomizeHooksPopup .hint {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 10px;
+}
+.popupModal-body div.form-type-checkbox{
+    padding: 2px !important;
+    margin-top:5px;
+}
+.popupModal-body div.form-type-textfield{
+    padding: 0px !important;    
+}
+.popupModal-body input.form-checkbox{
+    margin-left: 100px !important;
+}
+.popupModal-body label.option{
+    margin-left: -109px !important;
+}
+.popupModal-body label {
+    margin-left: 10px !important;
+    padding: 2px !important;
+}
+.popupModal-body input[type="text"] {
+    margin-left: 10px !important;    
+    padding: 2px !important;
+    margin-top: 4px;
+}
+.popupModal-body div.form-textarea-wrapper {
+    margin-left: 10px !important;    
+    padding: 2px !important;
+    width: 456px !important;
+}
+.popupModal-body input[type="submit"] {
+   margin-top: 10px !important;
+}
+#lr_raas_hook_customize input[type="text"] {
+   width: 200px !important;
+}
+#lr_raas_hook_valiadtion_message input[type="text"] {
+   width: 200px !important;
+}
+.popupModal-body div input.validationMessage{
+    float: left;
+    margin-top: -32px;
+    margin-left: 300px !important;
 }

@@ -24,7 +24,7 @@ $apiClient_class = 'CustomHttpClient';
 function lr_sso_menu() {
   $file_path = drupal_get_path('module', 'lr_sso');
   $items['admin/config/people/userregistration/sso'] = array(
-    'title' => 'sso',
+    'title' => 'SSO',
     'description' => 'Single Sign On',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('lr_sso_settings_form'),
@@ -187,7 +187,7 @@ function lr_sso_check_lrtoken_valid($token) {
         $token = $socialLoginObject->exchangeAccessToken($token);            
       }
       catch (LoginRadiusException $e) {
-          watchdog_exception('type', $e);
+          
     }
 
     if ($token) {

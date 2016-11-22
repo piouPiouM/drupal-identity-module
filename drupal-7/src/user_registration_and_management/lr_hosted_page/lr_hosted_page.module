@@ -12,7 +12,7 @@ module_load_include('inc', 'lr_social_login', 'includes/lr_social_login.function
 function lr_hosted_page_menu() {
   $file_path = drupal_get_path('module', 'lr_hosted_page');
   $items['admin/config/people/userregistration/hosted'] = array(
-    'title' => 'hosted',
+    'title' => 'Hosted Page',
     'description' => 'hosted page system',  
     'page callback' => 'drupal_get_form',
     'page arguments' => array('lr_hosted_settings_form'),
