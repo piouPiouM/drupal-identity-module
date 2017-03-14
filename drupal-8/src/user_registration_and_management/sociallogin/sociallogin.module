@@ -7,7 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use LoginRadiusSDK\LoginRadius;
+use LoginRadiusSDK\Utility\Functions;
 use LoginRadiusSDK\LoginRadiusException;
 
 /**
@@ -341,7 +341,7 @@ function get_authentication($apikey, $apisecret) {
     $data = array();
     try {
       $validate_url = 'https://api.loginradius.com/api/v2/app/validate?apikey=' . rawurlencode(trim($apikey)) . '&apisecret=' . rawurlencode(trim($apisecret));
-      $result = json_decode(LoginRadius::apiClient($validate_url, FALSE));
+      $result = json_decode(Functions::apiClient($validate_url, FALSE));
 
       if (empty($result)) {
         $data['message'] = t('please check your php.ini settings to enable CURL or FSOCKOPEN');

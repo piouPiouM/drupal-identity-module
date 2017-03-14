@@ -3,7 +3,7 @@
 
 use LoginRadiusSDK\Clients\IHttpClient;
 use LoginRadiusSDK\Clients\DefaultHttpClient;
-use LoginRadiusSDK\LoginRadius;
+use LoginRadiusSDK\Utility\Functions;
 use LoginRadiusSDK\LoginRadiusException;
 
 /**
@@ -28,13 +28,13 @@ class CustomHttpClient  implements IHttpClient {
       
 
     if ($query_array !== false) {
-            $query_array = (isset($options['authentication']) && ($options['authentication'] == false)) ? $query_array : LoginRadius::authentication($query_array);
+            $query_array = (isset($options['authentication']) && ($options['authentication'] == false)) ? $query_array : Functions::authentication($query_array);
             if (strpos($request_url, "?") === false) {
                 $request_url .= "?";
             } else {
                 $request_url .= "&";
             }
-            $request_url .= LoginRadius::queryBuild($query_array);
+            $request_url .= Functions::queryBuild($query_array);
         }
         if (in_array('curl', get_loaded_extensions())) {
             $response = $this->curlApiMethod($request_url, $options);
@@ -101,7 +101,7 @@ class CustomHttpClient  implements IHttpClient {
             curl_setopt($curl_handle, CURLOPT_HTTPHEADER, array('Content-type: application/' . $content_type));
             if ($method == 'post') {
                 curl_setopt($curl_handle, CURLOPT_POST, 1);
-                curl_setopt($curl_handle, CURLOPT_POSTFIELDS, (($content_type == 'json') ? json_encode($data) : LoginRadius::queryBuild($data)));
+                curl_setopt($curl_handle, CURLOPT_POSTFIELDS, (($content_type == 'json') ? json_encode($data) : Functions::queryBuild($data)));
             }
         }
 
@@ -143,7 +143,7 @@ class CustomHttpClient  implements IHttpClient {
                     'method' => strtoupper($method),
                     'timeout' => 50,
                     'header' => 'Content-type :application/' . $content_type,
-                    'content' => (($content_type == 'json') ? json_encode($data) : LoginRadius::queryBuild($data))
+                    'content' => (($content_type == 'json') ? json_encode($data) : Functions::queryBuild($data))
                 ),
                 "ssl" => array(
                     "verify_peer" => $ssl_verify

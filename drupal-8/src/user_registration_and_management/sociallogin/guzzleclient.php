@@ -1,7 +1,7 @@
 <?php
 
 use LoginRadiusSDK\Clients\IHttpClient;
-use LoginRadiusSDK\LoginRadius;
+use LoginRadiusSDK\Utility\Functions;
 use LoginRadiusSDK\LoginRadiusException;
 
 class LRGuzzleClient implements IHttpClient {
@@ -25,7 +25,7 @@ class LRGuzzleClient implements IHttpClient {
       $httpclient_options[$content_type] = $post_data;
     }
     if ($query_array !== FALSE) {
-      $validate_url .= '?' . LoginRadius::queryBuild(LoginRadius::authentication($query_array));
+      $validate_url .= '?' . Functions::queryBuild(Functions::authentication($query_array));
     }
 
     try {

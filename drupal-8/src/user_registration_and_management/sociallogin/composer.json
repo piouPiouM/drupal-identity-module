@@ -1,6 +1,6 @@
 {
     "name": "drupal/sociallogin",
     "require": {
-        "loginradius/php-sdk-2.0": "dev-master"
+        "loginradius/php-sdk": "dev-master"
     }
 }

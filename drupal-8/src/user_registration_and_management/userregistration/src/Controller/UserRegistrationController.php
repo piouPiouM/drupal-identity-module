@@ -11,8 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\user\Entity\User;
 use Drupal\Core\Access\AccessResult;
 use \LoginRadiusSDK\LoginRadiusException;
-use \LoginRadiusSDK\CustomerRegistration\AccountAPI;
-use \LoginRadiusSDK\CustomerRegistration\UserAPI;
+use \LoginRadiusSDK\CustomerRegistration\Management\AccountAPI;
+use \LoginRadiusSDK\CustomerRegistration\Authentication\UserAPI;
 
 /**
  * Returns responses for Social Login module routes.

@@ -11,8 +11,8 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\SafeMarkup;
 use \LoginRadiusSDK\LoginRadiusException;
-use \LoginRadiusSDK\CustomerRegistration\AccountAPI;
-use \LoginRadiusSDK\CustomerRegistration\UserAPI;
+use \LoginRadiusSDK\CustomerRegistration\Management\AccountAPI;
+use \LoginRadiusSDK\CustomerRegistration\Authentication\UserAPI;
 
 
 /**

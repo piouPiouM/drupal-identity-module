@@ -11,7 +11,7 @@ function sociallogin_requirements($phase) {
   $requirements = array();
 
   if ($phase == 'install') {
-    if (!class_exists('\LoginRadiusSDK\LoginRadius')) {
+    if (!class_exists('\LoginRadiusSDK\LoginRadiusException')) {
       $requirements['sociallogin'] = [
         'description' => t('SocialLogin requires LoginRadius PHP SDK library. Make sure the library is installed via Composer. Check README.txt for installation instructions.'),
         'severity' => REQUIREMENT_ERROR,

@@ -9,9 +9,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Entity\EntityTypeInterface;
-use LoginRadiusSDK\LoginRadius;
-use \LoginRadiusSDK\CustomerRegistration\AccountAPI;
-use \LoginRadiusSDK\CustomerRegistration\UserAPI;
+use LoginRadiusSDK\Utility\Functions;
+use \LoginRadiusSDK\CustomerRegistration\Management\AccountAPI;
+use \LoginRadiusSDK\CustomerRegistration\Authentication\UserAPI;
 use \LoginRadiusSDK\LoginRadiusException;
 
 module_load_include('php', 'sociallogin', 'customhttpclient');
@@ -692,7 +692,7 @@ $user = \Drupal::currentUser()->getRoles();
             try {
                 $forgotVerificationUrl = Url::fromRoute('user.login')->setAbsolute()->toString();          
                 $validate_url = 'https://api.loginradius.com/raas/client/password/forgot?apikey=' . rawurlencode(trim($apiKey)) . '&emailid=' . rawurlencode(trim($_POST['mail'])) . '&resetpasswordurl=' .$forgotVerificationUrl;              
-                $result = LoginRadius::apiClient($validate_url, FALSE, array('output_format'=>'json'));       
+                $result = Functions::apiClient($validate_url, FALSE, array('output_format'=>'json'));       
                 if (isset($result->isPosted) && $result->isPosted) {
                     drupal_set_message(t('A welcome message with further instructions has been emailed to the new user <a href=":url">%name</a>.', array(':url' => $account->url(), '%name' => $_POST['name'])));
                 }                      

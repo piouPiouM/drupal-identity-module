@@ -8,9 +8,9 @@ namespace Drupal\sociallogin\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Controller\ControllerBase;
-use LoginRadiusSDK\LoginRadius;
+use LoginRadiusSDK\Utility\Functions;
 use LoginRadiusSDK\LoginRadiusException;
-use LoginRadiusSDK\SocialLogin\SocialLoginAPI;
+use LoginRadiusSDK\CustomerRegistration\Social\SocialLoginAPI;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\user\Entity\User;
 use Drupal\Core\Url;

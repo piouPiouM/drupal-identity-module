@@ -11,7 +11,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Url;
 use Drupal\Component\Utility\SafeMarkup;
 use \LoginRadiusSDK\LoginRadiusException;
-use \LoginRadiusSDK\CustomerRegistration\AccountAPI;
+use \LoginRadiusSDK\CustomerRegistration\Management\AccountAPI;
 
 
 /**
@@ -193,7 +193,7 @@ class SocialLoginUserManager {
       $apiKey = trim($config->get('api_key'));
       $accountObj = new AccountAPI($apiKey, $apiSecret, array('output_format' => 'json'));
       try{
-          $result = $accountObj->getAccounts($userprofile->Uid);
+          $result = $accountObj->getProfileByUid($userprofile->Uid);
         }
         catch (LoginRadiusException $e){
         watchdog_exception('type', $e);
